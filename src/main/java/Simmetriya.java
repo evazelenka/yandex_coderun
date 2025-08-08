@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Simmetriya {
     public static void main(String[] args) throws IOException {
@@ -10,41 +12,39 @@ public class Simmetriya {
         for (int i = 0; i < c; i++) {
             array[i] = Integer.parseInt(str[i]);
         }
-        checkSimm(array, 0, array.length);
+        checkSimm(array);
         reader.close();
         writer.close();
+
     }
 
-    private static void checkSimm(int[] array, int start, int end){
-        int i = start;
-        int length = end - 1;
-        while (i < end && length >= 0 && array[i] == array[length] && i <= length){
-            i++;
-            length--;
+    private static void checkSimm(int[] array){
+        List<Integer> result = new ArrayList<>();
+        for (int i = 0; i < array.length; i++) {
+            if (!check(array, i, array.length-1)){
+                result.add(array[i]);
+            } else {
+//                System.out.println(array[i] + "!");
+                break;
+            }
         }
-        if (i > length){
-
+        System.out.println(result.size());
+        if (!result.isEmpty()){
+            for (int i = result.size()-1; i >= 0; i--) {
+                System.out.print(result.get(i) + " ");
+            }
         }
     }
 
-//    private static void checkSimm(int[] array, int start, int end){
-//        if (start>=end){
-//            System.out.println(start);
-//        }else if (array[start] == array[array.length - 1 -start]){
-//            checkSimm(array, start + 1, end-1);
-//            System.out.print(array[start] + " ");
-//        }else if (array[start] != array[array.length - 1 -start]){
-//            checkSimm(array, start + 1, end);
-//            System.out.print(array[start] + " ");
-//        }
-//    }
-//    private static boolean checkSimm(int[] array){
-//        for (int i = 0; i < array.length/2; i++) {
-//            if (array[i] != array[array.length - 1 -i]){
-//                return false;
-//            }
-//        }
-//        return true;
-//    }
+    private static boolean check(int[] array, int start, int end){
+        while (start<=end){
+            if (array[start] != array[end]){
+                return false;
+            }
+            start++;
+            end--;
+        }
+        return true;
+    }
 
 }
