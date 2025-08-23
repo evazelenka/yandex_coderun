@@ -7,6 +7,7 @@ import java.util.List;
 
 
 public class BinaryTreeLeetCode {
+    public static int m = 0;
     public static void main(String[] args) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String[] str = reader.readLine().split(" ");
@@ -22,19 +23,20 @@ public class BinaryTreeLeetCode {
         reader.close();
     }
 
-
-    public static int diameter(Integer[] array){
-      int left = recursive(array, 1);
-      int right = recursive(array, 2);
-      return left + right;
-    }
-
     private static int recursive(Integer[] array, int root){
-        if (root >= array.length){
+        if (root >= array.length || array[root] == null){
             return 0;
         }
         int left = recursive(array, root * 2 + 1);
         int right = recursive(array, root * 2 + 2);
+        m = Math.max(m, left + right);
+
         return Math.max(left, right) + 1;
+    }
+
+    public static int diameter(Integer[] array){
+        int left = recursive(array, 1);
+        int right = recursive(array, 2);
+        return Math.max(m, left + right);
     }
 }
